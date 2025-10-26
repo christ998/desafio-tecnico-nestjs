@@ -1,0 +1,55 @@
+version: '3.8'
+
+networks:
+  github-metrics-network:
+    driver: bridge
+
+volumes:
+  cache-data:
+    driver: local
+  node-modules:
+    driver: local
+
+services:
+  api:
+    image: node:20-alpine
+    container_name: github_metrics_service
+    hostname: metrics-api
+    working_dir: /app
+    networks:
+      - github-metrics-network
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - node-modules:/app/node_modules
+      - cache-data:/app/cache
+      - ./logs:/app/logs
+    command: sh -c "npm install && npm run build && npm start"
+    environment:
+      PORT: 3000
+      NODE_ENV: development
+      GITHUB_API_URL: ${GITHUB_API_URL:-https://api.github.com}
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      USER_AGENT: ${USER_AGENT:-github-metrics-api}
+      CACHE_TTL_SECONDS: ${CACHE_TTL_SECONDS:-300}
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3001/health || exit 1"]
+      interval: 45s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: on-failure:3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M

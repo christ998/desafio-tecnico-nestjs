@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "resolvePackageJsonExports": true,
+    "esModuleInterop": true,
+    "isolatedModules": false,
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2023",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "strictBindCallApply": true,
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@domain/*": ["src/domain/*"],
+      "@dto/*": ["src/application/dto/*"],
+      "@application/*": ["src/application/*"],
+      "@config/*": ["src/config/*"],
+      "@controllers/*": ["src/controllers/*"],
+      "@decorators/*": ["src/decorators/*"],
+      "@adapters/*": ["src/adapters/*"],
+      "@utils/*": ["src/utils/*"],
+      "@filters/*": ["src/filters/*"],
+      "@interceptors/*": ["src/interceptors/*"],
+      "@middlewares/*": ["src/middlewares/*"]
+    }
+  }
+}
