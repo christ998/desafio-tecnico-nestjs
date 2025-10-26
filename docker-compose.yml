@@ -34,7 +34,7 @@ services:
       USER_AGENT: ${USER_AGENT:-github-metrics-api}
       CACHE_TTL_SECONDS: ${CACHE_TTL_SECONDS:-300}
     healthcheck:
-      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3001/health || exit 1"]
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/health || exit 1"]
       interval: 45s
       timeout: 5s
       retries: 5
